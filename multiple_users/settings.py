@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3_with_proxy_models',
-        'NAME': BASE_DIR / 'db.sqlite3_with_boolean_values',
+        'NAME': BASE_DIR / 'db.sqlite3_with_multiple_choices',
     }
 }
 

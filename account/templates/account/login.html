@@ -1,0 +1,21 @@
+{% extends 'account/base.html' %}
+{% block body %}
+<div class="grid-x grid-padding-x">
+    <div class="cell small-3"></div>
+    <div class="cell small-6">
+        <h1>Login</h1>
+        <form method="POST" enctype="multipart/form-data">
+        
+            <!-- Security token -->
+            {% csrf_token %}
+        
+            <!-- Using the formset -->
+            {{ form.as_p }}
+            <div class="row">
+                <a  href="{% url 'account:register' %}">Create an account</a>
+            </div>
+            <input class="button" type="submit" value="Login">
+        </form>
+    </div>
+</div>
+{% endblock body %}

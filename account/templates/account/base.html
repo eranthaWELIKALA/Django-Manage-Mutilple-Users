@@ -1,0 +1,88 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block page_meta %}
+    {% endblock %}
+    {# Vendor styles #}
+    {% block vendor_css %}
+    <!-- Compressed CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2/trianglify.min.js"></script>
+    {% endblock %}
+
+    {# Global styles #}
+    {% block site_css %}
+    {% endblock %}
+
+    {# Page-specific styles #}
+    {% autoescape off %}
+    {% block page_css %}{% endblock %}
+    {% endautoescape %}
+
+    {% block extra_head %}
+    {# Extra header stuff (scripts, styles, metadata, etc) #}
+    {% endblock %}
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        // random background pattern
+        $(function(){
+
+        // See more options here: https://github.com/qrohlf/trianglify#options
+        var ops = {
+            noiseIntensity: 0,
+            opacity: 75
+        }
+        var t = new Trianglify(ops);
+        var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
+        document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
+        });
+    </script>
+
+    <title>{% block page_title %}{% endblock %}</title>
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    {% comment %} {% include 'django_class_based_app/topbar.html' %} {% endcomment %}
+    {% block body %}
+    {# Page content will go here #}
+    {% endblock %}
+
+    {# Modal HTML #}
+    {% block modals %}
+    {% endblock %}
+
+    {# Vendor javascript #}
+    {% block vendor_js %}
+    <!-- Compressed JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+    {% endblock %}
+
+    {# Global javascript #}
+    {% block site_js %}
+    {% endblock %}
+
+    {# Shared data for javascript #}
+    <script type="text/javascript">
+        window._sharedData = {
+    {% autoescape off %}
+        {% block shared_data %}
+        'DEBUG': {% if debug %} true{% else %} false{% endif %},
+        {% endblock %}
+        {% endautoescape %}
+  }
+    </script>
+
+    {# Page javascript #}
+    {% autoescape off %}
+    {% block page_js %}
+    {% endblock %}
+    {% endautoescape %}
+</body>
+
+</html>

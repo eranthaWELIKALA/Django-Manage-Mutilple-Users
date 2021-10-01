@@ -1,0 +1,20 @@
+{% extends 'account/base.html' %}
+{% block body %}
+<div class="top-bar">
+  <div class="top-bar-left">
+    <ul class="dropdown menu" data-dropdown-menu>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'account:logout' %}">Logout</a></li>
+      {% else%}
+      <li><a href="{% url 'account:login' %}">Login</a></li>
+      {% endif%}
+    </ul>
+  </div>
+</div>
+<div class="grid-x grid-padding-x">
+    <div class="cell small-3"></div>
+    <div class="cell small-6">
+        <h1>Hello {{user.username}}!</h1>
+    </div>
+</div>
+{% endblock body %}

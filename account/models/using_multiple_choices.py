@@ -1,27 +1,24 @@
 from django.db import models, transaction
 from django.contrib.auth.models import AbstractUser, UserManager as BaseUserManager
 
+class UserTypes(models.TextChoices):
+        SPY = "SPY", "Spy"
+        DRIVER = "DRIVER", "Driver"
+
 class UserManager(BaseUserManager):
     def get_queryset(self):
         return super().get_queryset().select_related()
 
 class User(AbstractUser):
-    is_spy = models.BooleanField(default=True)
-    is_driver = models.BooleanField(default=False)
-
-    # This both boolean values can not be True
+    type = models.CharField(max_length=50, choices=UserTypes.choices, default=UserTypes.SPY)
     def save(self, *args, **kwargs):
-        if self.is_spy and self.is_driver:
-            self.is_driver = False
-        elif (not self.is_spy) and (not self.is_driver):
-            self.is_spy = True
         if not self.pk:
             with transaction.atomic():
                 save_result = super().save(*args, **kwargs)
-                if self.is_spy:
+                if self.type==UserTypes.SPY:
                     spy = Spy(user=self)
                     spy.save()
-                elif (not self.is_spy) and (not self.is_driver):
+                else:
                     driver = Driver(user=self)
                     driver.save()
                 return save_result
